@@ -16,7 +16,7 @@ public class PlayPause : MonoBehaviour
 
     void Start()
     {
-        matPlay = Resources.Load("./Material/CubeMatPlay.mat", typeof(Material)) as Material;
+        matPlay = Resources.Load<Material>("Materials/CubeMatPlay");
     }
 
     // Update is called once per frame
