@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Audio;
 
 
 
@@ -21,13 +22,18 @@ public class PlayPause : MonoBehaviour
     public Animator cubeAnimator;
     bool playing;
 
+    public AudioSource sound;
+    public AudioClip audioclip;
+
     void Start()
     {
         matPlay = Resources.Load<Material>("Materials/CubeMatPlay");
         matPause = Resources.Load<Material>("Materials/CubeMatPause");
         playing = false;
-        
-        
+
+        sound = gameObject.GetComponent<AudioSource>();
+        cubeAnimator.enabled = false;
+
     }
 
     // Update is called once per frame
@@ -44,7 +50,7 @@ public class PlayPause : MonoBehaviour
         #endif
         RaycastHit hit;
         Ray ray = Camera.main.ScreenPointToRay(clickPos);
-        if (Physics.Raycast(ray, out hit) && clicked)
+        if (Physics.Raycast(ray, out hit) && clicked && hit.collider.name == "Cube")
         {
             Debug.Log("Clicked on gameobject: " + hit.collider.name);
 
@@ -56,8 +62,10 @@ public class PlayPause : MonoBehaviour
                 //cubeAnimator.SetBool("Playing", true);
                 cubeAnimator.enabled = true;
                 cubeAnimator.Play("Bouncing");
+                sound.Play();
                 playing = false;
-                object1.GetComponent<MeshRenderer>().material = matPause;
+                
+                object1.GetComponent<MeshRenderer>().material = matPlay;
                 cubeAnimator.SetTrigger("isPlaying");
             }
             else
@@ -65,8 +73,9 @@ public class PlayPause : MonoBehaviour
                 //testing2T.Invoke();
                 //cubeAnimator.SetBool("Playing", false);
                 cubeAnimator.enabled = false;
+                sound.Pause();
                 playing = true;
-                object1.GetComponent<MeshRenderer>().material = matPlay;
+                object1.GetComponent<MeshRenderer>().material = matPause;
                 cubeAnimator.ResetTrigger("isPlaying");
             }
 
