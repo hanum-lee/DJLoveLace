@@ -5,7 +5,11 @@ using UnityEngine;
 public class SphereSpin : MonoBehaviour
 {
     Transform thisObj;
-    public float rotationspeed = 20.0f;
+    float rotationspeed = 100.0f;
+    float dragspeed = 10.0f;
+
+    float highestDragSpeed = 0;
+    bool dragging = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -15,6 +19,57 @@ public class SphereSpin : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        thisObj.Rotate(0, Time.deltaTime * rotationspeed, 0, Space.World);
+        if (!dragging)
+        {
+            thisObj.Rotate(0, Time.deltaTime * rotationspeed, 0, Space.World);
+        }
+    }
+
+    void OnMouseDrag()
+    {
+        dragging = true;
+        float rot = Input.GetAxis("Mouse X");
+
+        transform.Rotate(0.0f, -rot * dragspeed, 0.0f, Space.World);
+
+        if (-rot > highestDragSpeed)
+        {     //Keep track of the fastest speed at which the user dragged
+            highestDragSpeed = -rot;
+        }
+
+
+    }
+    void OnMouseUp()
+    {
+        if (highestDragSpeed < 0.5)
+        {         //Will equal 0 if user dragged in opposite direction
+            highestDragSpeed = 0.5f;         //Make it very slow but still fast enough to see the spin
+        }
+
+        Debug.Log("highestDragSpeed: " + highestDragSpeed);
+
+        dragging = false;
+        rotationspeed = highestDragSpeed * 100;
+
+        if (0.5 <= highestDragSpeed && highestDragSpeed <= 0.65)
+        {
+            Debug.Log("Drag Speed Category: SLOW");
+            //DANIEL -> play the LOW-tempo audio file (with pitch depending on the last rope interaction)
+        }
+
+        if (0.65 < highestDragSpeed && highestDragSpeed <= 1.5)
+        {
+            Debug.Log("Drag Speed Category: MEDIUM");
+            //DANIEL -> play the NORMAL-tempo audio file (with pitch depending on the last rope interaction)
+        }
+
+        if (1.5 < highestDragSpeed)
+        {
+            Debug.Log("Drag Speed Category: FAST");
+            //DANIEL -> play the HIGH-tempo audio file (with pitch depending on the last rope interaction)
+        }
+
+
+        highestDragSpeed = 0;   //Reset
     }
 }

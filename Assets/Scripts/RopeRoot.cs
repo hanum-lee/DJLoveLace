@@ -26,6 +26,7 @@ public class RopeRoot : MonoBehaviour
 
         //add children
         AddChildren(transform);
+        
     }
 
     private void AddChildren(Transform parent)
@@ -37,7 +38,7 @@ public class RopeRoot : MonoBehaviour
             representative.transform.parent = RigidBodyContainer.transform;
             //rigidbody
             var childRigidbody = representative.gameObject.AddComponent<Rigidbody>();
-            childRigidbody.useGravity = true;
+            childRigidbody.useGravity = false;
             childRigidbody.isKinematic = false;
             childRigidbody.freezeRotation = true;
             childRigidbody.mass = RigidbodyMass;
