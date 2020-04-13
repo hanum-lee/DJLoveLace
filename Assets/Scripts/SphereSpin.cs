@@ -10,10 +10,12 @@ public class SphereSpin : MonoBehaviour
 
     float highestDragSpeed = 0;
     bool dragging = false;
+    AudioManager audioManager;
     // Start is called before the first frame update
     void Start()
     {
         thisObj = this.transform;
+        audioManager = FindObjectOfType<AudioManager>();
     }
 
     // Update is called once per frame
@@ -54,19 +56,26 @@ public class SphereSpin : MonoBehaviour
         if (0.5 <= highestDragSpeed && highestDragSpeed <= 0.65)
         {
             Debug.Log("Drag Speed Category: SLOW");
+
             //DANIEL -> play the LOW-tempo audio file (with pitch depending on the last rope interaction)
+            audioManager.tempo_indice = 2;
+            audioManager.updateSound();
         }
 
         if (0.65 < highestDragSpeed && highestDragSpeed <= 1.5)
         {
             Debug.Log("Drag Speed Category: MEDIUM");
             //DANIEL -> play the NORMAL-tempo audio file (with pitch depending on the last rope interaction)
+            audioManager.tempo_indice = 1;
+            audioManager.updateSound();
         }
 
         if (1.5 < highestDragSpeed)
         {
             Debug.Log("Drag Speed Category: FAST");
             //DANIEL -> play the HIGH-tempo audio file (with pitch depending on the last rope interaction)
+            audioManager.tempo_indice = 0;
+            audioManager.updateSound();
         }
 
 

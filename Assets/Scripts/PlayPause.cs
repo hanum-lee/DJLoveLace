@@ -62,7 +62,8 @@ public class PlayPause : MonoBehaviour
                 //cubeAnimator.SetBool("Playing", true);
                 cubeAnimator.enabled = true;
                 cubeAnimator.Play("Bouncing");
-                sound.Play();
+                FindObjectOfType<AudioManager>().Play();
+                //sound.Play();
                 playing = false;
                 
                 object1.GetComponent<MeshRenderer>().material = matPlay;
@@ -73,7 +74,8 @@ public class PlayPause : MonoBehaviour
                 //testing2T.Invoke();
                 //cubeAnimator.SetBool("Playing", false);
                 cubeAnimator.enabled = false;
-                sound.Pause();
+                //sound.Pause();
+                FindObjectOfType<AudioManager>().Pause();
                 playing = true;
                 object1.GetComponent<MeshRenderer>().material = matPause;
                 cubeAnimator.ResetTrigger("isPlaying");
