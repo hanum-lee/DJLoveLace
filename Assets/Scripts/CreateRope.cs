@@ -10,17 +10,22 @@ public class CreateRope : MonoBehaviour
     bool initalrelease;
     float initialspeed;
     Rigidbody rb;
-    float testing = .1f;
+    float testing = .5f;
 
     Transform[] childrenObject = new Transform[4];
     List<Transform> childrenTrans;
     List<GameObject> childGameObject;
     AudioManager audioManager;
+    GameObject playCube;
+    PlayPause playPauseScript;
+
+
 
     void Awake()
     {
         rb = gameObject.GetComponent<Rigidbody>();
         audioManager = FindObjectOfType<AudioManager>();
+
     }
 
     // Update is called once per frame
@@ -54,6 +59,7 @@ public class CreateRope : MonoBehaviour
         if(mouseY > 0)
         {
             Debug.Log("Pitch UP");
+
             audioManager.increasePitch();
             audioManager.updateSound();
         }

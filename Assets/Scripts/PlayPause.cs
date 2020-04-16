@@ -35,7 +35,7 @@ public class PlayPause : MonoBehaviour
         matPlay = Resources.Load<Material>("Materials/CubeMatPlay");
         matPause = Resources.Load<Material>("Materials/CubeMatPause");
         playing = false;
-
+        cubeAnimator = gameObject.GetComponent<Animator>();
         sound = gameObject.GetComponent<AudioSource>();
         cubeAnimator.enabled = false;
         currentani = 1;
@@ -110,7 +110,7 @@ public class PlayPause : MonoBehaviour
         //sound.Play();
         playing = false;
 
-        object1.GetComponent<MeshRenderer>().material = matPlay;
+        gameObject.GetComponent<MeshRenderer>().material = matPlay;
         cubeAnimator.SetTrigger("isPlaying");
     }
 
@@ -122,7 +122,7 @@ public class PlayPause : MonoBehaviour
         //sound.Pause();
         FindObjectOfType<AudioManager>().Pause();
         playing = true;
-        object1.GetComponent<MeshRenderer>().material = matPause;
+        gameObject.GetComponent<MeshRenderer>().material = matPause;
         cubeAnimator.ResetTrigger("isPlaying");
     }
 

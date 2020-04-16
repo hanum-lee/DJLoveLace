@@ -33,6 +33,7 @@ public class SphereSpin : MonoBehaviour
 
     void OnMouseDrag()
     {
+        playPauseScript.Pause();
         dragging = true;
         float rot = Input.GetAxis("Mouse X");
 
@@ -42,6 +43,7 @@ public class SphereSpin : MonoBehaviour
         {     //Keep track of the fastest speed at which the user dragged
             highestDragSpeed = -rot;
         }
+
 
 
     }
@@ -62,10 +64,14 @@ public class SphereSpin : MonoBehaviour
             Debug.Log("Drag Speed Category: SLOW");
 
             //DANIEL -> play the LOW-tempo audio file (with pitch depending on the last rope interaction)
-            audioManager.tempo_indice = 2;
-            playPauseScript.currentani = 2;
-            audioManager.updateSound();
-            
+            //audioManager.tempo_indice = 2;
+            //playPauseScript.currentani = 2;
+            //audioManager.updateSound();
+            ////playPauseScript.playing = false;
+            //playPauseScript.Pause();
+            changePitch(2);
+
+
 
         }
 
@@ -73,21 +79,36 @@ public class SphereSpin : MonoBehaviour
         {
             Debug.Log("Drag Speed Category: MEDIUM");
             //DANIEL -> play the NORMAL-tempo audio file (with pitch depending on the last rope interaction)
-            audioManager.tempo_indice = 1;
-            playPauseScript.currentani = 1;
-            audioManager.updateSound();
+            //audioManager.tempo_indice = 1;
+            //playPauseScript.currentani = 1;
+            //audioManager.updateSound();
+            //playPauseScript.Pause();
+
+            changePitch(1);
         }
 
         if (1.5 < highestDragSpeed)
         {
             Debug.Log("Drag Speed Category: FAST");
             //DANIEL -> play the HIGH-tempo audio file (with pitch depending on the last rope interaction)
-            audioManager.tempo_indice = 0;
-            playPauseScript.currentani = 0;
-            audioManager.updateSound();
+            //audioManager.tempo_indice = 0;
+            //playPauseScript.currentani = 0;
+            //audioManager.updateSound();
+            //playPauseScript.Pause();
+
+            changePitch(0);
         }
 
 
         highestDragSpeed = 0;   //Reset
+    }
+
+
+    public void changePitch(int indice)
+    {
+        audioManager.tempo_indice = indice;
+        playPauseScript.currentani = indice;
+        audioManager.updateSound();
+        playPauseScript.Pause();
     }
 }
