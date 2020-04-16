@@ -31,7 +31,7 @@ public class AudioManager : MonoBehaviour
             s.source.pitch = s.pitch;
         }
         current = Array.Find(sounds, sound => sound.name == "TNPN");
-        playpauseAni = gameObject.AddComponent<PlayPause>();
+        playpauseAni = gameObject.GetComponent<PlayPause>();
         audioChrousFilter = gameObject.GetComponent<AudioChorusFilter>();
     }
 
