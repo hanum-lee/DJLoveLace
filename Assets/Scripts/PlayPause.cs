@@ -20,11 +20,16 @@ public class PlayPause : MonoBehaviour
     public UnityEvent testing2T;
 
     public Animator cubeAnimator;
-    bool playing;
+    public bool playing;
 
     public AudioSource sound;
     public AudioClip audioclip;
 
+    string[] tempoAnimation = new string[] { "Bouncing_IncreasedTempo", "Bouncing","Bouncing_DecreasedTempo" };
+
+    public int currentani;
+    public int previousani;
+    
     void Start()
     {
         matPlay = Resources.Load<Material>("Materials/CubeMatPlay");
@@ -33,6 +38,7 @@ public class PlayPause : MonoBehaviour
 
         sound = gameObject.GetComponent<AudioSource>();
         cubeAnimator.enabled = false;
+        currentani = 1;
 
     }
 
@@ -60,25 +66,32 @@ public class PlayPause : MonoBehaviour
             {
                 //testing1B.Invoke();
                 //cubeAnimator.SetBool("Playing", true);
-                cubeAnimator.enabled = true;
-                cubeAnimator.Play("Bouncing");
-                FindObjectOfType<AudioManager>().Play();
-                //sound.Play();
-                playing = false;
-                
-                object1.GetComponent<MeshRenderer>().material = matPlay;
-                cubeAnimator.SetTrigger("isPlaying");
+
+
+                //cubeAnimator.enabled = true;
+                //cubeAnimator.Play("Bouncing");
+                //FindObjectOfType<AudioManager>().Play();
+                ////sound.Play();
+                //playing = false;
+
+                //object1.GetComponent<MeshRenderer>().material = matPlay;
+                //cubeAnimator.SetTrigger("isPlaying");
+
+                Playing();
             }
             else
             {
                 //testing2T.Invoke();
                 //cubeAnimator.SetBool("Playing", false);
-                cubeAnimator.enabled = false;
-                //sound.Pause();
-                FindObjectOfType<AudioManager>().Pause();
-                playing = true;
-                object1.GetComponent<MeshRenderer>().material = matPause;
-                cubeAnimator.ResetTrigger("isPlaying");
+
+
+                //cubeAnimator.enabled = false;
+                ////sound.Pause();
+                //FindObjectOfType<AudioManager>().Pause();
+                //playing = true;
+                //object1.GetComponent<MeshRenderer>().material = matPause;
+                //cubeAnimator.ResetTrigger("isPlaying");
+                Pause();
             }
 
             
@@ -88,6 +101,30 @@ public class PlayPause : MonoBehaviour
        
     }
 
+    public void Playing()
+    {
+        cubeAnimator.enabled = true;
+        //cubeAnimator.Play("Bouncing");
+        cubeAnimator.Play(tempoAnimation[currentani]);
+        FindObjectOfType<AudioManager>().Play();
+        //sound.Play();
+        playing = false;
+
+        object1.GetComponent<MeshRenderer>().material = matPlay;
+        cubeAnimator.SetTrigger("isPlaying");
+    }
+
+    public void Pause()
+    {
+        //testing2T.Invoke();
+        //cubeAnimator.SetBool("Playing", false);
+        cubeAnimator.enabled = false;
+        //sound.Pause();
+        FindObjectOfType<AudioManager>().Pause();
+        playing = true;
+        object1.GetComponent<MeshRenderer>().material = matPause;
+        cubeAnimator.ResetTrigger("isPlaying");
+    }
 
 
 

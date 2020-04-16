@@ -13,6 +13,8 @@ public class AudioManager : MonoBehaviour
     public int tempo_indice = 1;
     public int pitch_indice = 1;
     public string song_name;
+
+    PlayPause playpauseAni;
     
     void Awake()
     {
@@ -25,6 +27,7 @@ public class AudioManager : MonoBehaviour
             s.source.pitch = s.pitch;
         }
         current = Array.Find(sounds, sound => sound.name == "TNPN");
+        playpauseAni = gameObject.AddComponent<PlayPause>();
     }
 
     // Update is called once per frame
@@ -85,6 +88,8 @@ public class AudioManager : MonoBehaviour
 
     public void updateSound()
     {
+        current.source.Pause();
+        //playpauseAni.playing = false;
         var updated_sound_name = sound_names[tempo_indice, pitch_indice];
         current = Array.Find(sounds, sound => sound.name == updated_sound_name);
     }
