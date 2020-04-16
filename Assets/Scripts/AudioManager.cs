@@ -15,7 +15,11 @@ public class AudioManager : MonoBehaviour
     public string song_name;
 
     PlayPause playpauseAni;
-    
+
+    AudioChorusFilter audioChrousFilter;
+    public float depth;
+    public float rate;
+
     void Awake()
     {
         foreach(Sound s in sounds)
@@ -28,6 +32,7 @@ public class AudioManager : MonoBehaviour
         }
         current = Array.Find(sounds, sound => sound.name == "TNPN");
         playpauseAni = gameObject.AddComponent<PlayPause>();
+        audioChrousFilter = gameObject.GetComponent<AudioChorusFilter>();
     }
 
     // Update is called once per frame
@@ -92,5 +97,11 @@ public class AudioManager : MonoBehaviour
         //playpauseAni.playing = false;
         var updated_sound_name = sound_names[tempo_indice, pitch_indice];
         current = Array.Find(sounds, sound => sound.name == updated_sound_name);
+    }
+
+    public void updateChrousFilter(float rate, float depth)
+    {
+        audioChrousFilter.depth = depth;
+        audioChrousFilter.rate = rate;
     }
 }
