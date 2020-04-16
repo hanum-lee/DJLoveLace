@@ -25,7 +25,8 @@ public class CreateRope : MonoBehaviour
     {
         rb = gameObject.GetComponent<Rigidbody>();
         audioManager = FindObjectOfType<AudioManager>();
-
+        playCube = GameObject.Find("Cube");
+        playPauseScript = playCube.GetComponent<PlayPause>();
     }
 
     // Update is called once per frame
@@ -47,7 +48,8 @@ public class CreateRope : MonoBehaviour
         //transform.position = new Vector3(rb.position.x, Input.mousePosition.y, rb.position.z);
         //transform.Translate(transform.position.x, mouseY, transform.position.z, Space.World);
         rb.AddForce(mouseY * testing * Vector3.up );
-        
+        playPauseScript.Pause();
+
     }
 
     void OnMouseUp()
@@ -59,15 +61,18 @@ public class CreateRope : MonoBehaviour
         if(mouseY > 0)
         {
             Debug.Log("Pitch UP");
-
+            playPauseScript.Pause();
             audioManager.increasePitch();
             audioManager.updateSound();
+            
         }
         else
         {
             Debug.Log("Pitch DOWN");
+            playPauseScript.Pause();
             audioManager.decreasePitch();
             audioManager.updateSound();
+            
         }
         initalrelease = true;
     }
